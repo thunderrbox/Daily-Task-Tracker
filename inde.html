@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RANA's Daily Task Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Animated Background -->
+    <div class="background-wrapper">
+      <div class="gradient-bg"></div>
+      <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+        <div class="shape shape-5"></div>
+        <div class="shape shape-6"></div>
+      </div>
+      <div class="particles" id="particles"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+      <!-- Header Section with Animation -->
+      <header class="app-header">
+        <div class="header-content">
+          <div class="header-icon">
+            <svg width="60" height="60" viewBox="0 0 60 60">
+              <circle
+                cx="30"
+                cy="30"
+                r="28"
+                fill="url(#headerGradient)"
+                opacity="0.2"
+              />
+              <path
+                d="M30 10 L35 20 L45 22 L37.5 30 L40 40 L30 35 L20 40 L22.5 30 L15 22 L25 20 Z"
+                fill="url(#headerGradient)"
+              />
+              <defs>
+                <lineargradient
+                  id="headerGradient"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop offset="0%" class="gradient-stop-1" />
+                  <stop offset="100%" class="gradient-stop-2" />
+                </lineargradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="header-text">
+            <h1 class="main-title">My Daily Tasks</h1>
+            <p class="subtitle" id="currentDate"></p>
+          </div>
+          <div
+            class="theme-toggle"
+            onclick="toggleTheme()"
+            title="Toggle Theme"
+          >
+            <div class="theme-icon">🌙</div>
+          </div>
+        </div>
+
+        <!-- Motivational Quote -->
+        <div class="motivation-banner">
+          <span class="quote-icon">💡</span>
+          <p class="motivation-text" id="motivationText">
+            Great things never come from comfort zones!
+          </p>
+        </div>
+      </header>
+
+      <!-- Statistics Dashboard -->
+      <section class="stats-dashboard">
+        <div class="stat-card stat-card-total">
+          <div class="stat-icon">📊</div>
+          <div class="stat-content">
+            <div class="stat-number" id="totalTasks">0</div>
+            <div class="stat-label">Total Tasks</div>
+          </div>
+          <div class="stat-progress">
+            <div class="progress-ring"></div>
+          </div>
+        </div>
+
+        <div class="stat-card stat-card-completed">
+          <div class="stat-icon">✅</div>
+          <div class="stat-content">
+            <div class="stat-number" id="completedTasks">0</div>
+            <div class="stat-label">Completed</div>
+          </div>
+          <div class="stat-progress">
+            <div class="progress-ring"></div>
+          </div>
+        </div>
+
+        <div class="stat-card stat-card-pending">
+          <div class="stat-icon">⏳</div>
+          <div class="stat-content">
+            <div class="stat-number" id="pendingTasks">0</div>
+            <div class="stat-label">In Progress</div>
+          </div>
+          <div class="stat-progress">
+            <div class="progress-ring"></div>
+          </div>
+        </div>
+
+        <div class="stat-card stat-card-streak">
+          <div class="stat-icon">🔥</div>
+          <div class="stat-content">
+            <div class="stat-number" id="streakDays">7</div>
+            <div class="stat-label">Day Streak</div>
+          </div>
+          <div class="stat-progress">
+            <div class="progress-ring"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Task Input Section -->
+      <section class="task-input-section">
+        <div class="section-header-inline">
+          <h2>✨ Create New Task</h2>
+          <button
+            class="quick-add-btn"
+            onclick="toggleQuickAdd()"
+            title="Quick Add Mode"
+          >
+            <span>⚡</span>
+          </button>
+        </div>
+
+        <div class="task-input-card">
+          <div class="input-group">
+            <div class="input-wrapper">
+              <span class="input-icon">📝</span>
+              <input
+                type="text"
+                id="taskInput"
+                class="task-input"
+                placeholder="What needs to be done today?"
+                onkeypress="handleKeyPress(event)"
+              />
+            </div>
+
+            <div class="task-options">
+              <div class="option-group">
+                <label class="option-label">Priority</label>
+                <div class="priority-buttons">
+                  <button
+                    class="priority-btn"
+                    data-priority="high"
+                    onclick="selectPriority('high')"
+                  >
+                    <span class="priority-dot priority-high"></span>
+                    High
+                  </button>
+                  <button
+                    class="priority-btn priority-active"
+                    data-priority="medium"
+                    onclick="selectPriority('medium')"
+                  >
+                    <span class="priority-dot priority-medium"></span>
+                    Medium
+                  </button>
+                  <button
+                    class="priority-btn"
+                    data-priority="low"
+                    onclick="selectPriority('low')"
+                  >
+                    <span class="priority-dot priority-low"></span>
+                    Low
+                  </button>
+                </div>
+              </div>
+
+              <div class="option-group">
+                <label class="option-label">Time</label>
+                <div class="time-buttons">
+                  <button
+                    class="time-btn"
+                    data-time="morning"
+                    onclick="selectTime('morning')"
+                  >
+                    🌅 Morning
+                  </button>
+                  <button
+                    class="time-btn"
+                    data-time="afternoon"
+                    onclick="selectTime('afternoon')"
+                  >
+                    ☀️ Afternoon
+                  </button>
+                  <button
+                    class="time-btn"
+                    data-time="evening"
+                    onclick="selectTime('evening')"
+                  >
+                    🌙 Evening
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn-add-task" onclick="addTask()">
+              <span class="btn-icon">+</span>
+              <span class="btn-text">Add Task</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Filter and View Options -->
+      <section class="filter-section">
+        <div class="filter-tabs">
+          <button class="filter-tab active" onclick="filterTasks('all')">
+            <span>All Tasks</span>
+            <span class="tab-badge" id="filterAll">0</span>
+          </button>
+          <button class="filter-tab" onclick="filterTasks('active')">
+            <span>Active</span>
+            <span class="tab-badge" id="filterActive">0</span>
+          </button>
+          <button class="filter-tab" onclick="filterTasks('completed')">
+            <span>Completed</span>
+            <span class="tab-badge" id="filterCompleted">0</span>
+          </button>
+        </div>
+
+        <div class="view-options">
+          <button
+            class="view-btn active"
+            onclick="changeView('time')"
+            title="Group by Time"
+          >
+            <span>⏰</span>
+          </button>
+          <button
+            class="view-btn"
+            onclick="changeView('priority')"
+            title="Group by Priority"
+          >
+            <span>🎯</span>
+          </button>
+          <button
+            class="view-btn"
+            onclick="changeView('list')"
+            title="List View"
+          >
+            <span>📋</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Tasks Container -->
+      <div id="tasksContainer">
+        <!-- Morning Tasks -->
+        <section class="task-section">
+          <div class="section-header">
+            <div class="section-title">
+              <span class="section-emoji">🌅</span>
+              <h3>Morning Tasks</h3>
+            </div>
+            <div class="section-info">
+              <span class="task-count" id="morningCount">0</span>
+              <button
+                class="section-collapse"
+                onclick="toggleSection('morning')"
+              >
+                <span>▼</span>
+              </button>
+            </div>
+          </div>
+          <div class="task-list" id="morningTasks">
+            <div class="empty-state">
+              <div class="empty-illustration">☕</div>
+              <p class="empty-text">No morning tasks yet</p>
+              <p class="empty-subtext">Start your day right!</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Afternoon Tasks -->
+        <section class="task-section">
+          <div class="section-header">
+            <div class="section-title">
+              <span class="section-emoji">☀️</span>
+              <h3>Afternoon Tasks</h3>
+            </div>
+            <div class="section-info">
+              <span class="task-count" id="afternoonCount">0</span>
+              <button
+                class="section-collapse"
+                onclick="toggleSection('afternoon')"
+              >
+                <span>▼</span>
+              </button>
+            </div>
+          </div>
+          <div class="task-list" id="afternoonTasks">
+            <div class="empty-state">
+              <div class="empty-illustration">🚀</div>
+              <p class="empty-text">No afternoon tasks yet</p>
+              <p class="empty-subtext">Keep the momentum going!</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Evening Tasks -->
+        <section class="task-section">
+          <div class="section-header">
+            <div class="section-title">
+              <span class="section-emoji">🌙</span>
+              <h3>Evening Tasks</h3>
+            </div>
+            <div class="section-info">
+              <span class="task-count" id="eveningCount">0</span>
+              <button
+                class="section-collapse"
+                onclick="toggleSection('evening')"
+              >
+                <span>▼</span>
+              </button>
+            </div>
+          </div>
+          <div class="task-list" id="eveningTasks">
+            <div class="empty-state">
+              <div class="empty-illustration">⭐</div>
+              <p class="empty-text">No evening tasks yet</p>
+              <p class="empty-subtext">Finish strong!</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Action Buttons -->
+      <section class="action-bar">
+        <button
+          class="action-btn action-btn-secondary"
+          onclick="clearCompleted()"
+        >
+          <span class="action-icon">🗑️</span>
+          <span>Clear Completed</span>
+        </button>
+        <button class="action-btn action-btn-info" onclick="exportTasks()">
+          <span class="action-icon">📥</span>
+          <span>Export Tasks</span>
+        </button>
+        <button class="action-btn action-btn-danger" onclick="resetDay()">
+          <span class="action-icon">🔄</span>
+          <span>Reset All</span>
+        </button>
+      </section>
+    </div>
+
+    <!-- Creative RANA Signature -->
+    <div class="rana-signature">
+      <div class="signature-inner">
+        <div class="signature-sparkle">✨</div>
+        <div class="signature-content">
+          <div class="signature-name">RANA</div>
+        </div>
+        <div class="signature-year">ASR</div>
+      </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div class="toast" id="toast">
+      <div class="toast-icon">✓</div>
+      <div class="toast-message"></div>
+    </div>
+
+    <!-- Script -->
+    <script src="script.js"></script>
+  </body>
+</html>
