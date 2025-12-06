@@ -158,16 +158,9 @@ We welcome contributions! Here's how you can get started:
 4. Push your branch to your fork.
 5. Open a pull request.
 
-## 📝 License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 👥 Authors & Contributors
 - **RANA** - Initial work
-- **Your Name** - Contributions
-
-## 🐛 Issues & Support
-- Report issues on the [GitHub Issues page](https://github.com/yourusername/Daily-Task-Tracker/issues).
-- For support, please open an issue or contact the maintainers.
+- **Abhijeet Singh Rana** - Contributions
 
 ## 🗺️ Roadmap
 - **Planned Features**:
@@ -186,7 +179,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Badges:**
 [![Build Status](https://travis-ci.org/yourusername/Daily-Task-Tracker.svg?branch=main)](https://travis-ci.org/yourusername/Daily-Task-Tracker)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
 
